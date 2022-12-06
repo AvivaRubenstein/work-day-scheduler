@@ -10,9 +10,21 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
   $('.saveBtn').on("click", function(event){
-    //this doesn't work bc the buttons id doesn't correspond to which time block is accessed
-    var btnClicked = $(this).attr("id");
-    console.log(btnClicked);
+    //$(this) is referring to the exact element/button which triggered the event, in this case the exact save button which was clicked
+    //we need to traverse the DOM with jquery's .parents to find the parent element(s) which contain the button that was pressed
+    //so that we can ultimately identify which of the save buttons was pressed
+    var slotClicked = $(this).parents("div");
+    console.log(slotClicked);
+    //this accesses the first index of slotClicked, which in this case refers to the div
+    //which is the direct parent of the button, as opposed to index 1 which refers to the div
+    //which surrounds the entire timeBlock section
+    var hourClicked = slotClicked.eq(0);
+    console.log(hourClicked);
+    //this step targets the id attribute of the specific timeslot we clicked save on, so we can easily identify which hour was clicked
+    var hourClickedId = hourClicked.attr("id");
+    console.log(hourClickedId);
+
+    localStorage.setItem(`$(hourClickedId)` , "");
   });
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
