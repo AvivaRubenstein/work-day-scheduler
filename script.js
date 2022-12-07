@@ -1,6 +1,7 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+var hourClicked;
 $(function () {
   
   // TODO: Add a listener for click events on the save button. This code should
@@ -18,13 +19,30 @@ $(function () {
     //this accesses the first index of slotClicked, which in this case refers to the div
     //which is the direct parent of the button, as opposed to index 1 which refers to the div
     //which surrounds the entire timeBlock section
-    var hourClicked = slotClicked.eq(0);
+    hourClicked = slotClicked.eq(0);
     console.log(hourClicked);
     //this step targets the id attribute of the specific timeslot we clicked save on, so we can easily identify which hour was clicked
     var hourClickedId = hourClicked.attr("id");
     console.log(hourClickedId);
+    var textArea = hourClicked.children("textarea");
+    
+    //TODO figure out how to access the text input the user actually entered so that we can store it in local storage
+    console.log(textArea.attr("name"));
+    var inputTask = textArea.val();
+    console.log(inputTask);
+    
+    //This creates an object containing the id of the hour clicked and the text input by the user next to that hour 
+    var storeText = {
+      hour : hourClickedId,
+      text : inputTask
+    };
+  //here we are making the storeText object into a JSON string, and setting it up to be saved in local storage
+    localStorage.setItem("taskStorage", JSON.stringify(storeText) );
+  //here we are retrieving and parsing the stored information to bring it back into a format usable in javascript
+    var storedText = JSON.parse(localStorage.getItem("taskStorage"));
+  //print the object that was stored 
+    console.log(storedText);
 
-    localStorage.setItem(`$(hourClickedId)` , "");
   });
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
