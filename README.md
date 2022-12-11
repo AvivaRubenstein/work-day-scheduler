@@ -7,16 +7,14 @@ Through coding this project, I practiced using the dayjs API, as well as using l
 
 ## Installation
 
-Go to URL: 
+Go to URL:  https://avivarubenstein.github.io/work-day-scheduler/
 
 ## Usage
 
 To store an hourly task, click into the text area for one of the hour slots, type in a task for that hour, and click the save button on the right.  Now when you close the page or refresh you should still be able to see the content you saved in the correct slot.  Hours which have passed for today are colored gray, the current hour is colored red, and future hours are colored green.
 
-   
-    ![websiteGIF](./Work%20Day%20Scheduler.gif)
+   ![Work Day Scheduler](https://user-images.githubusercontent.com/113466697/206931466-de21aa09-7e79-4e23-b29b-121a878c6fce.gif)
     
-
 ## Credits
 
 This project was built using starter code from Columbia's Full-Stack Bootcamp.  It also uses APIs from Jquery and day.js.  
