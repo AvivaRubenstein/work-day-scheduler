@@ -194,11 +194,25 @@ $(function () {
 
  var allHourBlocks = document.querySelectorAll(".time-block");
  for (i=0; i< allHourBlocks.length; i++){
-  console.log(allHourBlocks[i]);
+  // console.log(allHourBlocks[i]);
   //this targets the individual ids for each of the hour block divs
   var getTextBoxId = allHourBlocks[i].getAttribute("id");
-  console.log(getTextBoxId);
-  
+  // console.log(getTextBoxId);
+
+  var existingStorage = JSON.parse(localStorage.getItem("taskStorage"));
+  if (existingStorage !== null ) {
+    for (j=0; j< existingStorage.length; j++)
+    {
+      if (getTextBoxId === existingStorage[j].hour)
+      {
+        console.log('we have something stored at ' + existingStorage[j].hour);
+        var usedTextArea = allHourBlocks[i].querySelector(".input");
+        usedTextArea.textContent = existingStorage[j].inputText;
+        
+      }
+    }
+  }
+ 
 
  }
   // displays the current date in the header of the page.
