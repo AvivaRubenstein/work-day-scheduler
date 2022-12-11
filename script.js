@@ -3,6 +3,7 @@
 // in the html.
 var hourClicked;
 var storedText;
+var textArray;
 $(function () {
 
   // TODO: Add a listener for click events on the save button. This code should
@@ -37,12 +38,25 @@ $(function () {
       hour: hourClickedId,
       inputText: inputTask
     };
-    //here we are making the storeText object into a JSON string, and setting it up to be saved in local storage
-    localStorage.setItem("taskStorage", JSON.stringify(storeText));
-    //here we are retrieving and parsing the stored information to bring it back into a format usable in javascript
-    storedText = JSON.parse(localStorage.getItem("taskStorage"));
-    //print the object that was stored 
-    console.log(storedText);
+    //here we set up an empty array to contain the contents of multiple storeText objects
+    textArray = [];
+    //here we set existing storage equal to anything that is contained in local storage under the key "taskStorage"
+    var existingStorage = JSON.parse(localStorage.getItem("taskStorage"));
+    //this if statement checks whether anything is already stored in local storage under that key
+    //if there is nothing stored, we push whatever is CURRENTLY stored in the storeText object (meaning the most recent thing we clicked save on)
+    //into our textArray array
+    if (existingStorage === null){
+      textArray.push(storeText);
+    //If there wasn't anything already stored in local storage with this key, we set it up so that there IS something now stored there
+    //we take the textArray containing the most recent content in the storeText object, and set that array up to be stored in local storage as a JSON string
+    localStorage.setItem("taskStorage", JSON.stringify(textArray));
+    //if there WAS already something stored in local storage under "taskStorage" key,
+    //we push the most recent content in the storeText object (or the most recently saved text) into the textArray 
+    //and then we set the local storage to be the NEW content of the the textArray array
+    //this will include all the past items saved in local storage along with the most recently saved 
+    } else {textArray = existingStorage;
+    textArray.push(storeText);
+    localStorage.setItem("taskStorage", JSON.stringify(textArray)); }
 
   });
   // TODO: Add code to apply the past, present, or future class to each time
@@ -55,13 +69,7 @@ $(function () {
   //depending on whether the current hour is before/after/during the hour slot, we add/remove classes for styling those slots
   var currentHour = dayjs().hour();
   console.log(currentHour);
-  // var allHourIds = $(".time-block").find("id");
-  // console.log(allHourIds);
-  // for (i = 0; i < allHourIds.length; i++) {
 
-  // }
-  //problem:  after 12, it seems the day.js hours are stored as 1,2,3 etc instead of 13, 14, 15...
-  //need to extract the numbers from the id string so they'll match up to that 
   if (currentHour > 9) {
     $("#hour-9").addClass("past");
     $("#hour-9").removeClass("present");
@@ -183,9 +191,16 @@ $(function () {
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
   //TODO --fix!!
-  // storedText = JSON.parse(localStorage.getItem("taskStorage"));
-  // console.log(storedText.inputText);
-  // hourClicked.find("#textarea").text(storedText.text);
+
+ var allHourBlocks = document.querySelectorAll(".time-block");
+ for (i=0; i< allHourBlocks.length; i++){
+  console.log(allHourBlocks[i]);
+  //this targets the individual ids for each of the hour block divs
+  var getTextBoxId = allHourBlocks[i].getAttribute("id");
+  console.log(getTextBoxId);
+  
+
+ }
   // displays the current date in the header of the page.
   var dateSlot = $("#currentDay");
   var today = dayjs().format("dddd[,] MMMM D[,] YYYY");
