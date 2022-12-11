@@ -190,8 +190,9 @@ $(function () {
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
-  //TODO --fix!!
 
+  //this outer for loop loops through all of the elements with the timeBlock class, and 
+  //gets the id attribute attached to each one -- this allows us to target each of the hours individually
  var allHourBlocks = document.querySelectorAll(".time-block");
  for (i=0; i< allHourBlocks.length; i++){
   // console.log(allHourBlocks[i]);
@@ -199,12 +200,17 @@ $(function () {
   var getTextBoxId = allHourBlocks[i].getAttribute("id");
   // console.log(getTextBoxId);
 
+  //if there is something stored in our local storage already, we loop through each object in the stored array
   var existingStorage = JSON.parse(localStorage.getItem("taskStorage"));
   if (existingStorage !== null ) {
     for (j=0; j< existingStorage.length; j++)
     {
+  //for each object stored in the array we look to see if the hour id we stored in the object matches one of the textBoxIds
       if (getTextBoxId === existingStorage[j].hour)
       {
+  //when we find an object with an associated hour id, we make the text content of the textarea for that hour
+  //equal to the inputText in the object associated with that hour
+  //now, when we refresh, the website automatically repopulates the textareas to contain what we saved into them using local storage
         console.log('we have something stored at ' + existingStorage[j].hour);
         var usedTextArea = allHourBlocks[i].querySelector(".input");
         usedTextArea.textContent = existingStorage[j].inputText;
